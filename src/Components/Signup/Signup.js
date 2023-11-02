@@ -2,19 +2,28 @@ import React, { useState, useContext } from 'react';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
 import {useHistory} from 'react-router-dom'
-import { FirebaseContext } from '../../Store/FirebaseContext';
+import { FirebaseContext } from '../../Store/Context';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faX} from "@fortawesome/free-solid-svg-icons"
 
 export default function Signup() {
 
-  const history = useHistory()
+//To redirect to login page - here we making state  
+
+  const history = useHistory() 
+
+// to collect user entered data to state
 
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [mobile, setMobile] = useState('')
   const [password, setPassword] = useState('')
 
+// adding firebase Using Context
   const {firebase} = useContext(FirebaseContext)
 
+// collect data from user and storing in firebase auth and firestore
+  
   const handleSubmit = (e)=>{
     e.preventDefault()
     firebase.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
@@ -23,16 +32,26 @@ export default function Signup() {
           id:result.user.uid,
           username: userName,
           mobile: mobile
-        }).then(()=>{
+        })
+        
+//To redirect to login page here we calling        
+        .then(()=>{
           history.push('/Login')
         })
       })
     })
   }
 
+  const handleClose= ()=>{
+    history.push('./')
+  }
+
+// here html form for collecting data 
+  
   return (
     <div>
       <div className="signupParentDiv" >
+      <FontAwesomeIcon icon={faX} className='closeIcon' onClick={handleClose}/>
         <img width="250px" height="250px"src={Logo}></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Name</label>

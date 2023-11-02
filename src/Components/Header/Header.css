@@ -82,28 +82,33 @@
   height: 48px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .language span {
   /* justify-content: space-between;
   align-items: center; */
-  font-size: 15px;
-  white-space: normal;
-  text-overflow: ellipsis;
-  font-weight: bolder;
-  margin-right: 5px;
-}
-
-.language svg {
-}
-
-.span {
-  text-decoration: none;
   font-size: 16px;
   white-space: normal;
   text-overflow: ellipsis;
   font-weight: bolder;
   margin-right: 5px;
+}
+
+
+.loginPage span {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  white-space: normal;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.LogIn-Link{
+  text-decoration: none;
+  color: black;
 }
 
 .loginPage hr {
@@ -115,9 +120,16 @@
 .loginPage a{
   text-decoration: none;
 }
+.logOut{
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 
 .sellMenu {
   position: relative;
+  cursor: pointer;
   cursor: pointer;
 }
 
@@ -142,7 +154,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #002f34;

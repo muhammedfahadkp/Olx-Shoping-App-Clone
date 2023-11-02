@@ -1,3 +1,8 @@
+.closeIcon{
+  padding-left: 360px;
+  cursor: pointer;
+}
+
 .signupParentDiv {
     border: 1px solid black;
     width: 400px;
@@ -7,6 +12,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 6px;
+    font-size: 20px;
+    font-weight: 400;
   }
 
   .signupParentDiv img{
@@ -15,6 +22,8 @@
   
   .signupParentDiv .input {
     width: 370px;
+    font-size: 18px;
+    font-weight: 400;
     border-top-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
