@@ -1,22 +1,52 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import './Create.css';
 import Header from '../Header/Header';
+import {FirebaseContext, AuthContext} from '../../Store/Context'
 
 const Create = () => {
+
+  const {firebase} = useContext(FirebaseContext)
+  const {user} = useContext(AuthContext)
+
+  const [name,setName] = useState('')
+  const [category, setCategory] = useState('')
+  const [price, setPrice] = useState('')
+  const [image, setImage] = useState(null)
+
+  const date = new Date()
+
+  const handleSubmit = () =>{
+    firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
+      ref.getDownloadURL().then((url)=>{
+        console.log(url);
+        firebase.firestore().collection('Products').add({
+          name,
+          category,
+          price,
+          url,
+          userId: user.uid,
+          createdAt:date.toDateString() ,
+        })
+      })
+    })
+  }
+
   return (
     <Fragment>
       <Header />
       <card>
         <div className="centerDiv">
-          <form>
+          
             <label htmlFor="fname">Name</label>
             <br />
             <input
               className="input"
               type="text"
+              value={name}
+              onChange={(e)=>setName(e.target.value)}
               id="fname"
               name="Name"
-              defaultValue="John"
+              placeholder='Enter Your Name'
             />
             <br />
             <label htmlFor="fname">Category</label>
@@ -24,24 +54,38 @@ const Create = () => {
             <input
               className="input"
               type="text"
+              value={category}
+              onChange={(e)=>setCategory(e.target.value)}
               id="fname"
               name="category"
-              defaultValue="John"
+              placeholder='Enter Type of Category'
             />
             <br />
             <label htmlFor="fname">Price</label>
             <br />
-            <input className="input" type="number" id="fname" name="Price" />
+            <input 
+            className="input" 
+            type="number" 
+            value={price}
+            onChange={(e)=>setPrice(e.target.value)}
+            id="fname" 
+            name="Price"
+            placeholder='Enter Desired Price'  
+            />
             <br />
-          </form>
+        
           <br />
-          <img alt="Posts" width="200px" height="200px" src=""></img>
-          <form>
+          <img alt="Upload Image" width="200px" height="200px" src={image ? URL.createObjectURL(image) : "Upload Image"}></img> {/* this javaScript function to show image */}
+          
             <br />
-            <input type="file" />
+            <input 
+            onChange={(e)=>{
+              setImage(e.target.files[0])
+            }}
+            type="file" />
             <br />
-            <button className="uploadBtn">upload and Submit</button>
-          </form>
+            <button onClick={handleSubmit} className="uploadBtn">Upload and Submit</button>
+  
         </div>
       </card>
     </Fragment>
